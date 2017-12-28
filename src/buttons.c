@@ -7,8 +7,8 @@
 
 #include "buttons.h"
 
-#define BUF_SIZE   64      
-#define BUT_AMOUNT 5
+#define BUF_SIZE   64     
+#define BUT_AMOUNT 18
 #define THRESHOLD  5
 
 typedef struct{
@@ -26,8 +26,10 @@ static but_t all_buttons[BUT_AMOUNT];
 static uint32_t event_fifo_buffer[BUF_SIZE];
 static fifo_desc_t event_fifo_desc;
 
-void but_handler(const uint32_t port_id, const uint32_t pins); 
 void but_push_event(uint32_t code, uint32_t action);
+void but_init_one(Pio* pio, uint32_t id, uint32_t pin, uint32_t code);
+
+/********************************************************************/
 
 void but_init_one(Pio* pio, uint32_t id, uint32_t pin, uint32_t code)
 {
@@ -47,19 +49,33 @@ void but_init(void)
 {
 	fifo_init(&event_fifo_desc, event_fifo_buffer, BUF_SIZE);
 	
-	pmc_enable_periph_clk(BUT_PORT_ID);
-	but_init_one(BUT_PORT, 0, BUT_1_PIN, BUT_1_CODE);
-	but_init_one(BUT_PORT, 1, BUT_2_PIN, BUT_2_CODE);
-	but_init_one(BUT_PORT, 2, BUT_3_PIN, BUT_3_CODE);
-	but_init_one(BUT_PORT, 3, BUT_4_PIN, BUT_4_CODE);
-	but_init_one(BUT_PORT, 4, BUT_5_PIN, BUT_5_CODE);
+	pmc_enable_periph_clk(ID_PIOD);
+	pmc_enable_periph_clk(ID_PIOC);
 	
-
+	but_init_one(BUT_1_PORT, 0, BUT_1_PIN, BUT_1_CODE);
+	but_init_one(BUT_2_PORT, 1, BUT_2_PIN, BUT_2_CODE);
+	but_init_one(BUT_3_PORT, 2, BUT_3_PIN, BUT_3_CODE);
+	but_init_one(BUT_4_PORT, 3, BUT_4_PIN, BUT_4_CODE);
+	but_init_one(BUT_5_PORT, 4, BUT_5_PIN, BUT_5_CODE);
+	but_init_one(BUT_6_PORT, 5, BUT_6_PIN, BUT_6_CODE);
+    but_init_one(BUT_7_PORT, 6, BUT_7_PIN, BUT_7_CODE);
+	but_init_one(BUT_8_PORT, 7, BUT_8_PIN, BUT_8_CODE);
+	but_init_one(BUT_9_PORT, 8, BUT_9_PIN, BUT_9_CODE);
+	
+	but_init_one(BUT_10_PORT, 9, BUT_10_PIN, BUT_10_CODE);
+	but_init_one(BUT_11_PORT, 10, BUT_11_PIN, BUT_11_CODE);
+	but_init_one(BUT_12_PORT, 11, BUT_12_PIN, BUT_12_CODE);
+	but_init_one(BUT_13_PORT, 12, BUT_13_PIN, BUT_13_CODE);
+	but_init_one(BUT_14_PORT, 13, BUT_14_PIN, BUT_14_CODE);
+	but_init_one(BUT_15_PORT, 14, BUT_15_PIN, BUT_15_CODE);
+	but_init_one(BUT_16_PORT, 15, BUT_16_PIN, BUT_16_CODE);
+	but_init_one(BUT_17_PORT, 16, BUT_17_PIN, BUT_17_CODE);
+	but_init_one(BUT_18_PORT, 17, BUT_18_PIN, BUT_18_CODE);
 }
 
 void but_poll(void)
 {
-	for(uint32_t i = 0; i < BUT_AMOUNT; i++){
+	for(uint8_t i = 0; i < BUT_AMOUNT; i++){
 		
 		but_t* but = &all_buttons[i];
 	
@@ -91,7 +107,7 @@ bool but_has_event(void)
 	return !fifo_is_empty(&event_fifo_desc);
 }
 
-but_event_t but_get_event(void)
+void but_get_event(but_event_t* event)
 {
 	uint32_t code = -1;
 	uint32_t action = -1;
@@ -103,10 +119,8 @@ but_event_t but_get_event(void)
 		cpu_irq_leave_critical();
 	}
 	
-	but_event_t event;
-	event.code = code;
-	event.action = action;
-	return event;
+	event->code = code;
+	event->action = action;
 }
 
 void but_push_event(uint32_t code, uint32_t action)

@@ -32,21 +32,23 @@
 #include "buttons.h"
 
 bool enable_scan_keys = false; 
+but_event_t but_event; 
 
 void user_callback_sof_action(void)
 {
+	
 	if (enable_scan_keys && but_has_event()){
-		but_event_t event = but_get_event();
-		
+		but_get_event(&but_event);
+
 #ifdef DEBUG
-		printf("code: %d action: %d\n", event.code, event.action);
+		printf("code: %d action: %d\n", but_event.code, but_event.action);
 #endif
 
-		if (event.action == BUT_ACTION_DOWN){
-			udi_hid_kbd_down(event.code);
+		if (but_event.action == BUT_ACTION_DOWN){
+			udi_hid_kbd_down(but_event.code);
 		}
 		else{
-			udi_hid_kbd_up(event.code);
+			udi_hid_kbd_up(but_event.code);
 		}
 	}
 	

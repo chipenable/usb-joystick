@@ -21,7 +21,7 @@ typedef struct{
 }but_event_t;
 
 void but_init(void);
-but_event_t but_get_event(void);
+void but_get_event(but_event_t* event);
 bool but_has_event(void);
 void but_poll(void);
 
