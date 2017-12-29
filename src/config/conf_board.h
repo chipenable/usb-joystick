@@ -11,7 +11,7 @@
 #ifndef CONF_BOARD_H
 #define CONF_BOARD_H
 
-#define DEBUG_BUILD
+//#define DEBUG_BUILD
 
 /** player 1 */
 

@@ -51,6 +51,7 @@ void but_init(void)
 	
 	pmc_enable_periph_clk(ID_PIOD);
 	pmc_enable_periph_clk(ID_PIOC);
+	pmc_enable_periph_clk(ID_PIOA);
 	
 	but_init_one(BUT_1_PORT, 0, BUT_1_PIN, BUT_1_CODE);
 	but_init_one(BUT_2_PORT, 1, BUT_2_PIN, BUT_2_CODE);
