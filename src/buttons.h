@@ -24,6 +24,7 @@ void but_init(void);
 void but_get_event(but_event_t* event);
 bool but_has_event(void);
 void but_poll(void);
+uint32_t but_get_event_count(void);
 
 
 #endif /* BUTTONS_H_ */

@@ -36,19 +36,28 @@ but_event_t but_event;
 
 void user_callback_sof_action(void)
 {
+	uint32_t event_count;  
 	
 	if (enable_scan_keys && but_has_event()){
-		but_get_event(&but_event);
+		event_count = but_get_event_count();
+			
+#ifdef DEBUG_BUILD
+        printf("events: %d\n", but_get_event_count());
+#endif			
+			
+		for(uint32_t i = 0; i < event_count; i++){
+			but_get_event(&but_event);
 
-#ifdef DEBUG
-		printf("code: %d action: %d\n", but_event.code, but_event.action);
+#ifdef DEBUG_BUILD
+			printf("code: %d action: %d\n", but_event.code, but_event.action);
 #endif
 
-		if (but_event.action == BUT_ACTION_DOWN){
-			udi_hid_kbd_down(but_event.code);
-		}
-		else{
-			udi_hid_kbd_up(but_event.code);
+			if (but_event.action == BUT_ACTION_DOWN){
+				udi_hid_kbd_down(but_event.code);
+			}
+			else{
+				udi_hid_kbd_up(but_event.code);
+			}
 		}
 	}
 	
@@ -91,7 +100,7 @@ int main (void)
 	udc_attach();
 	but_init();
 
-#ifdef DEBUG 	
+#ifdef DEBUG_BUILD	
     usart_init();
 #endif
 	

@@ -131,4 +131,9 @@ void but_push_event(uint32_t code, uint32_t action)
 	cpu_irq_leave_critical();
 }
 
+uint32_t but_get_event_count(void)
+{
+	return fifo_get_used_size(&event_fifo_desc)/2;
+}
+
 

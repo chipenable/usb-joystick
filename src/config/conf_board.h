@@ -11,21 +11,21 @@
 #ifndef CONF_BOARD_H
 #define CONF_BOARD_H
 
-//#define DEBUG
+#define DEBUG_BUILD
 
 /** player 1 */
 
 #define BUT_1_PORT       PIOD
 #define BUT_1_PIN        PIO_PD9
-#define BUT_1_CODE       HID_E
+#define BUT_1_CODE       HID_R
 
 #define BUT_2_PORT       PIOD
 #define BUT_2_PIN        PIO_PD10
-#define BUT_2_CODE       HID_T
+#define BUT_2_CODE       HID_Y
 
 #define BUT_3_PORT       PIOC
 #define BUT_3_PIN        PIO_PC1
-#define BUT_3_CODE       HID_R
+#define BUT_3_CODE       HID_T
 
 #define BUT_4_PORT       PIOC
 #define BUT_4_PIN        PIO_PC2
@@ -55,7 +55,7 @@
 
 #define BUT_10_PORT       PIOC
 #define BUT_10_PIN        PIO_PC15
-#define BUT_10_CODE       HID_I
+#define BUT_10_CODE       HID_O
 
 #define BUT_11_PORT       PIOC
 #define BUT_11_PIN        PIO_PC16
@@ -63,7 +63,7 @@
 
 #define BUT_12_PORT       PIOC
 #define BUT_12_PIN        PIO_PC17
-#define BUT_12_CODE       HID_O
+#define BUT_12_CODE       HID_OPEN_BRACKET
 
 #define BUT_13_PORT       PIOC
 #define BUT_13_PIN        PIO_PC18
@@ -88,7 +88,5 @@
 #define BUT_18_PORT       PIOC
 #define BUT_18_PIN        PIO_PC8
 #define BUT_18_CODE       HID_J
-
-
 
 #endif // CONF_BOARD_H
